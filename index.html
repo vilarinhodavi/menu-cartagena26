@@ -35,7 +35,7 @@ header h1{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);fo
 .stag{font-size:10px;font-weight:500;padding:2px 6px;border-radius:8px;white-space:nowrap}
 .sk-yes{background:#D5F5E3;color:#1E8449}
 .sk-help{background:#FDEBD0;color:#A04000}
-.sk-no{background:#FADBD8;color:#A93226}
+.sk-no{background:#FADBD8;color:#A93226}.sk-list{background:#EAF3FE;color:#1A5276}
 .vrow{display:flex;align-items:center;gap:2px;margin-left:3px}
 .vbtn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--text-muted);width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:background .12s}
 .vbtn:hover{background:var(--sand-dark)}
@@ -48,7 +48,7 @@ header h1{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);fo
 .sbtn{padding:6px 10px;border-radius:8px;border:1px solid var(--sand-dark);background:#fff;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--text-muted);transition:all .15s}
 .sbtn.sel-yes{background:#D5F5E3;border-color:#82E0AA;color:#1E8449;font-weight:500}
 .sbtn.sel-help{background:#FDEBD0;border-color:#F0B27A;color:#A04000;font-weight:500}
-.sbtn.sel-no{background:#FADBD8;border-color:#F1948A;color:#A93226;font-weight:500}
+.sbtn.sel-no{background:#FADBD8;border-color:#F1948A;color:#A93226;font-weight:500}.sbtn.sel-list{background:#EAF3FE;border-color:#85B7EB;color:#1A5276;font-weight:500}
 .abtn{padding:8px 16px;border-radius:10px;border:none;background:var(--ocean);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
 .abtn:hover{background:var(--ocean-light)}
 .abtn:active{transform:scale(.97)}
@@ -110,8 +110,8 @@ const MBD={
   sab:[{id:'cafe',l:'Café da manhã',bg:'#FDEBD0'},{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'},{id:'jantar',l:'Jantar',bg:'#E8DAEF'}],
   dom:[{id:'cafe',l:'Café da manhã',bg:'#FDEBD0'},{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'}]
 };
-const SL={yes:'Sei fazer',help:'Com ajuda',no:'Só como'};
-const SC={yes:'sk-yes',help:'sk-help',no:'sk-no'};
+const SL={yes:"Sei fazer",help:"Com ajuda",no:"Só como",list:"Colocar na lista"};
+const SC={yes:"sk-yes",help:"sk-help",no:"sk-no",list:"sk-list"};
 
 let curDay='sex', curPerson='Davi';
 let curSkill={cafe:'yes',almoco:'yes',lanche:'yes',jantar:'yes'};

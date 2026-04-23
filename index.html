@@ -215,6 +215,7 @@ function renderGrid(){
           <button class="sbtn ${sk==='yes'?'sel-yes':''}" data-meal="${m.id}" data-skill="yes" onclick="selSkill('${m.id}','yes')">Sei fazer</button>
           <button class="sbtn ${sk==='help'?'sel-help':''}" data-meal="${m.id}" data-skill="help" onclick="selSkill('${m.id}','help')">Com ajuda</button>
           <button class="sbtn ${sk==='no'?'sel-no':''}" data-meal="${m.id}" data-skill="no" onclick="selSkill('${m.id}','no')">Só como</button>
+          <button class="sbtn ${sk==='list'?'sel-list':''}" data-meal="${m.id}" data-skill="list" onclick="selSkill('${m.id}','list')">Colocar na lista</button>
         </div>
         <button class="abtn" onclick="addS('${m.id}')">Adicionar</button>
       </div>

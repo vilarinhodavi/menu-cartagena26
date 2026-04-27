@@ -1,13 +1,245 @@
-DELETE FROM sugestoes WHERE prato ILIKE 'coxinha';
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu Jornada BR – Cartagena 26</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--sand:#F5EFE0;--sand-dark:#E8DFC8;--ocean:#1A5276;--ocean-light:#2E86C1;--sun:#E67E22;--text:#1C1C1C;--text-muted:#6B6B6B;--white:#FFFFFF;--card:#ffffffcc;--r:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--text);min-height:100vh;background-image:radial-gradient(ellipse at 10% 0%,rgba(26,82,118,.12) 0%,transparent 50%),radial-gradient(ellipse at 90% 100%,rgba(230,126,34,.10) 0%,transparent 50%)}
+header{background:var(--ocean);color:#fff;padding:1.5rem 1.25rem 2rem;text-align:center;position:relative}
+header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:28px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%)}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:6px}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,30px);font-weight:700;line-height:1.2}
+.hsub{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px}
+.wrap{max-width:640px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.slabel{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;font-weight:500}
+.prow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
+.pbtn{padding:8px 18px;border-radius:40px;border:1.5px solid rgba(26,82,118,.2);background:#fff;color:var(--text-muted);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .18s}
+.pbtn:hover{border-color:var(--ocean-light);color:var(--ocean)}
+.pbtn.on{background:var(--ocean);border-color:var(--ocean);color:#fff;font-weight:500;box-shadow:0 3px 12px rgba(26,82,118,.25)}
+.dtabs{display:flex;gap:0;margin-bottom:1.5rem;border-radius:var(--r);overflow:hidden;border:1px solid var(--sand-dark);background:var(--sand-dark)}
+.dtab{flex:1;padding:10px 8px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-muted);cursor:pointer;transition:all .18s}
+.dtab.on{background:#fff;color:var(--ocean);font-weight:500;border-radius:calc(var(--r) - 2px);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.mcard{background:var(--card);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:12px;border:1px solid rgba(0,0,0,.06)}
+.mhead{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.micon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.mtitle{font-size:14px;font-weight:500}
+.pills{display:flex;flex-wrap:wrap;gap:6px;min-height:24px;margin-bottom:10px}
+.pill{display:flex;align-items:center;gap:5px;background:var(--sand);border:1px solid var(--sand-dark);border-radius:30px;padding:5px 10px;font-size:12px;animation:fi .22s ease}
+@keyframes fi{from{opacity:0;transform:scale(.93)}to{opacity:1;transform:scale(1)}}
+.pname{color:var(--text);font-weight:500}
+.pauth{color:var(--text-muted);font-size:11px}
+.stag{font-size:10px;font-weight:500;padding:2px 6px;border-radius:8px;white-space:nowrap}
+.sk-yes{background:#D5F5E3;color:#1E8449}
+.sk-help{background:#FDEBD0;color:#A04000}
+.sk-no{background:#FADBD8;color:#A93226}.sk-list{background:#EAF3FE;color:#1A5276}
+.vrow{display:flex;align-items:center;gap:2px;margin-left:3px}
+.vbtn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--text-muted);width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:background .12s}
+.vbtn:hover{background:var(--sand-dark)}
+.vc{font-size:12px;font-weight:500;min-width:14px;text-align:center;color:var(--text-muted)}
+.vc.hot{color:var(--sun)}
+.arow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.arow input{flex:1;min-width:120px;padding:8px 12px;border:1.5px solid var(--sand-dark);border-radius:10px;background:#fff;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .15s}
+.arow input:focus{border-color:var(--ocean-light)}
+.ssel{display:flex;gap:4px;flex-wrap:wrap}
+.sbtn{padding:6px 10px;border-radius:8px;border:1px solid var(--sand-dark);background:#fff;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--text-muted);transition:all .15s}
+.sbtn.sel-yes{background:#D5F5E3;border-color:#82E0AA;color:#1E8449;font-weight:500}
+.sbtn.sel-help{background:#FDEBD0;border-color:#F0B27A;color:#A04000;font-weight:500}
+.sbtn.sel-no{background:#FADBD8;border-color:#F1948A;color:#A93226;font-weight:500}.sbtn.sel-list{background:#EAF3FE;border-color:#85B7EB;color:#1A5276;font-weight:500}
+.abtn{padding:8px 16px;border-radius:10px;border:none;background:var(--ocean);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.abtn:hover{background:var(--ocean-light)}
+.abtn:active{transform:scale(.97)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1.25rem}
+.leg{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-muted)}
+.ldot{width:9px;height:9px;border-radius:50%}
+.hint{font-size:12px;color:#bbb;font-style:italic}
+.sumbtn{width:100%;margin-top:1rem;padding:13px;border-radius:var(--r);border:1.5px solid var(--sun);background:transparent;color:var(--sun);font-family:'Playfair Display',serif;font-size:15px;cursor:pointer;letter-spacing:.3px;transition:all .18s}
+.sumbtn:hover{background:var(--sun);color:#fff}
+.statusbar{text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:1.25rem;min-height:18px;display:flex;align-items:center;justify-content:center;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0}
+.dot.live{background:#27AE60;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.loading-msg{text-align:center;padding:2rem;color:var(--text-muted);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Menu BR – Cartagena 26</h1>
+  <p class="hsub">Davi · Gustavo · Lucas · Ricardo</p>
+</header>
 
-DELETE FROM sugestoes WHERE prato ILIKE 'ovo';
+<div class="wrap">
+  <div class="statusbar">
+    <div class="dot" id="sdot"></div>
+    <span id="stxt">Conectando...</span>
+  </div>
 
-DELETE FROM sugestoes WHERE prato ILIKE 'iogurte';
+  <p class="slabel">Você é</p>
+  <div class="prow">
+    <button class="pbtn on" onclick="selP(this,'Davi')">Davi</button>
+    <button class="pbtn" onclick="selP(this,'Gustavo')">Gustavo</button>
+    <button class="pbtn" onclick="selP(this,'Lucas')">Lucas</button>
+    <button class="pbtn" onclick="selP(this,'Ricardo')">Ricardo</button>
+  </div>
 
-DELETE FROM sugestoes 
-WHERE prato ILIKE 'pão de queijo' 
-AND id = (SELECT MAX(id) FROM sugestoes WHERE prato ILIKE 'pão de queijo');
+  <div class="legend">
+    <div class="leg"><div class="ldot" style="background:#27AE60"></div>Sei fazer</div>
+    <div class="leg"><div class="ldot" style="background:#E67E22"></div>Com ajuda</div>
+    <div class="leg"><div class="ldot" style="background:#E74C3C"></div>Só como</div>
+    <div class="leg"><div class="ldot" style="background:#1A5276"></div>Colocar na lista</div>
+  </div>
 
-UPDATE sugestoes 
-SET autor = 'Lucas' 
-WHERE prato ILIKE 'carbonara' AND autor = 'Davi';
+  <div class="dtabs" id="dtabs"></div>
+  <div id="grid"></div>
+  <button class="sumbtn" onclick="doSummary()">Ver resumo completo do menu →</button>
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SURL = 'https://htfrupgfwayxxixaouwn.supabase.co';
+const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0ZnJ1cGdmd2F5eHhpeGFvdXduIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Njg4NTkwNSwiZXhwIjoyMDkyNDYxOTA1fQ.5esxrA4RK1B9lTBcxxDfw2ROmbfJYfd8z3FQTSEDaDE';
+const sb = createClient(SURL, SKEY);
+
+const DAYS=[{id:'sex',l:'Sexta'},{id:'sab',l:'Sábado'},{id:'dom',l:'Domingo'}];
+const MBD={
+  sex:[{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'},{id:'jantar',l:'Jantar',bg:'#E8DAEF'}],
+  sab:[{id:'cafe',l:'Café da manhã',bg:'#FDEBD0'},{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'},{id:'jantar',l:'Jantar',bg:'#E8DAEF'}],
+  dom:[{id:'cafe',l:'Café da manhã',bg:'#FDEBD0'},{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'}]
+};
+const SL={yes:"Sei fazer",help:"Com ajuda",no:"Só como",list:"Colocar na lista"};
+const SC={yes:"sk-yes",help:"sk-help",no:"sk-no",list:"sk-list"};
+
+let curDay='sex', curPerson='Davi';
+let curSkill={cafe:'yes',almoco:'yes',lanche:'yes',jantar:'yes'};
+let allItems=[];
+
+function setStatus(live, msg){
+  document.getElementById('sdot').className='dot'+(live?' live':'');
+  document.getElementById('stxt').textContent=msg;
+}
+
+async function loadAll(){
+  const {data,error}=await sb.from('sugestoes').select('*').order('id',{ascending:true});
+  if(error){setStatus(false,'Erro de conexão');return;}
+  allItems=data||[];
+  setStatus(true,'Ao vivo — atualiza em tempo real');
+  renderGrid();
+}
+
+// realtime
+sb.channel('sugestoes-changes')
+  .on('postgres_changes',{event:'*',schema:'public',table:'sugestoes'},()=>loadAll())
+  .subscribe();
+
+loadAll();
+
+window.selP=function(btn,p){
+  curPerson=p;
+  document.querySelectorAll('.pbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+};
+
+window.selDay=function(id){
+  curDay=id;
+  renderTabs();
+  renderGrid();
+};
+
+window.selSkill=function(mealId,skill){
+  curSkill[mealId]=skill;
+  document.querySelectorAll(`.sbtn[data-meal="${mealId}"]`).forEach(b=>{
+    b.className='sbtn';
+    if(b.dataset.skill===skill)b.classList.add('sel-'+skill);
+  });
+};
+
+window.addS=async function(mealId){
+  const inp=document.getElementById('inp-'+mealId);
+  const val=inp.value.trim();
+  if(!val)return;
+  inp.value='';
+  await sb.from('sugestoes').insert({
+    dia:curDay, refeicao:mealId, prato:val,
+    autor:curPerson, habilidade:curSkill[mealId], votos:{}
+  });
+};
+
+window.vote=async function(id,pessoa,delta){
+  const item=allItems.find(i=>i.id===id);
+  if(!item)return;
+  const votos={...item.votos};
+  const prev=votos[pessoa]||0;
+  const next=prev+delta;
+  if(next<0||next>3)return;
+  votos[pessoa]=next;
+  await sb.from('sugestoes').update({votos}).eq('id',id);
+};
+
+function tv(votos){return Object.values(votos||{}).reduce((a,b)=>a+b,0);}
+
+function renderTabs(){
+  document.getElementById('dtabs').innerHTML=DAYS.map(d=>
+    `<button class="dtab ${d.id===curDay?'on':''}" onclick="selDay('${d.id}')">${d.l}</button>`
+  ).join('');
+}
+
+function renderGrid(){
+  renderTabs();
+  document.getElementById('grid').innerHTML=MBD[curDay].map(m=>{
+    const items=allItems.filter(i=>i.dia===curDay&&i.refeicao===m.id);
+    const pills=items.length?items.map(it=>{
+      const t=tv(it.votos);
+      return `<div class="pill">
+        <span class="pname">${it.prato}</span>
+        <span class="pauth">${it.autor}</span>
+        <span class="stag ${SC[it.habilidade]}">${SL[it.habilidade]}</span>
+        <div class="vrow">
+          <button class="vbtn" onclick="vote(${it.id},'${curPerson}',-1)">−</button>
+          <span class="vc ${t>0?'hot':''}">${t}</span>
+          <button class="vbtn" onclick="vote(${it.id},'${curPerson}',1)">+</button>
+        </div>
+      </div>`;
+    }).join(''):'<span class="hint">Nenhuma sugestão ainda</span>';
+
+    const sk=curSkill[m.id];
+    return `<div class="mcard">
+      <div class="mhead"><div class="micon" style="background:${m.bg}"></div><span class="mtitle">${m.l}</span></div>
+      <div class="pills">${pills}</div>
+      <div class="arow">
+        <input id="inp-${m.id}" type="text" placeholder="Sugerir prato..." onkeydown="if(event.key==='Enter')addS('${m.id}')">
+        <div class="ssel">
+          <button class="sbtn ${sk==='yes'?'sel-yes':''}" data-meal="${m.id}" data-skill="yes" onclick="selSkill('${m.id}','yes')">Sei fazer</button>
+          <button class="sbtn ${sk==='help'?'sel-help':''}" data-meal="${m.id}" data-skill="help" onclick="selSkill('${m.id}','help')">Com ajuda</button>
+          <button class="sbtn ${sk==='no'?'sel-no':''}" data-meal="${m.id}" data-skill="no" onclick="selSkill('${m.id}','no')">Só como</button>
+          <button class="sbtn ${sk==='list'?'sel-list':''}" data-meal="${m.id}" data-skill="list" onclick="selSkill('${m.id}','list')">Colocar na lista</button>
+        </div>
+        <button class="abtn" onclick="addS('${m.id}')">Adicionar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.doSummary=function(){
+  let lines=['Resumo — Menu Jornada BR Cartagena 26\nDavi · Gustavo · Lucas · Ricardo\n'];
+  DAYS.forEach(d=>{
+    lines.push(d.l+':');
+    MBD[d.id].forEach(m=>{
+      const items=allItems.filter(i=>i.dia===d.id&&i.refeicao===m.id);
+      if(!items.length){lines.push('  '+m.l+': sem sugestões');return;}
+      const sorted=items.slice().sort((a,b)=>tv(b.votos)-tv(a.votos));
+      lines.push('  '+m.l+':');
+      sorted.forEach(it=>lines.push(`    • ${it.prato} — ${it.autor} (${SL[it.habilidade]}) · ${tv(it.votos)} votos`));
+    });
+    lines.push('');
+  });
+  alert(lines.join('\n'));
+};
+
+renderTabs();
+</script>
+</body>
+</html>

@@ -13,9 +13,6 @@ header{background:var(--ocean);color:#fff;padding:1.5rem 1.25rem 2.5rem;text-ali
 header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:28px;background:var(--sand);clip-path:ellipse(55% 100% at 50% 100%)}
 header h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,32px);font-weight:700;line-height:1.2}
 .hsub{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px}
-.mainnav{display:flex;gap:0;margin:1.25rem 0;border-radius:var(--r);overflow:hidden;border:1px solid var(--sand-dark);background:var(--sand-dark)}
-.mnbtn{flex:1;padding:11px 8px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .18s}
-.mnbtn.on{background:#fff;color:var(--ocean);border-radius:calc(var(--r) - 2px);box-shadow:0 1px 6px rgba(0,0,0,.08)}
 .wrap{max-width:640px;margin:0 auto;padding:0 1rem 3rem}
 .slabel{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;font-weight:500}
 .prow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.5rem}
@@ -89,37 +86,8 @@ header h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,32px);fo
 </header>
 
 <div class="wrap">
-  <div class="mainnav">
-    <button class="mnbtn on" onclick="showSection('sugestoes',this)">Sugestões</button>
-    <button class="mnbtn" onclick="showSection('menu',this)">Menu Completo</button>
-  </div>
-
-  <!-- SUGESTOES -->
-  <div id="sec-sugestoes">
-    <div class="statusbar">
-      <div class="dot" id="sdot"></div>
-      <span id="stxt">Conectando...</span>
-    </div>
-    <p class="slabel">Você é</p>
-    <div class="prow">
-      <button class="pbtn on" onclick="selP(this,'Davi')">Davi</button>
-      <button class="pbtn" onclick="selP(this,'Gustavo')">Gustavo</button>
-      <button class="pbtn" onclick="selP(this,'Lucas')">Lucas</button>
-      <button class="pbtn" onclick="selP(this,'Ricardo')">Ricardo</button>
-    </div>
-    <div class="legend">
-      <div class="leg"><div class="ldot" style="background:#27AE60"></div>Sei fazer</div>
-      <div class="leg"><div class="ldot" style="background:#E67E22"></div>Com ajuda</div>
-      <div class="leg"><div class="ldot" style="background:#E74C3C"></div>Só como</div>
-      <div class="leg"><div class="ldot" style="background:#1A5276"></div>Colocar na lista</div>
-    </div>
-    <div class="dtabs" id="dtabs"></div>
-    <div id="grid"></div>
-    <button class="sumbtn" onclick="doSummary()">Ver resumo completo do menu →</button>
-  </div>
-
   <!-- MENU COMPLETO -->
-  <div id="sec-menu" style="display:none">
+  
 
     <div class="mc-day">
       <div class="mc-day-title">🍅 Sexta</div>
@@ -246,95 +214,6 @@ header h1{font-family:'Playfair Display',serif;font-size:clamp(22px,5vw,32px);fo
   </div>
 </div>
 
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-const SURL='https://htfrupgfwayxxixaouwn.supabase.co';
-const SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0ZnJ1cGdmd2F5eHhpeGFvdXduIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Njg4NTkwNSwiZXhwIjoyMDkyNDYxOTA1fQ.5esxrA4RK1B9lTBcxxDfw2ROmbfJYfd8z3FQTSEDaDE';
-const sb=createClient(SURL,SKEY);
-const DAYS=[{id:'sex',l:'Sexta'},{id:'sab',l:'Sábado'},{id:'dom',l:'Domingo'}];
-const MBD={
-  sex:[{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'},{id:'jantar',l:'Jantar',bg:'#E8DAEF'}],
-  sab:[{id:'cafe',l:'Café da manhã',bg:'#FDEBD0'},{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'},{id:'jantar',l:'Jantar',bg:'#E8DAEF'}],
-  dom:[{id:'cafe',l:'Café da manhã',bg:'#FDEBD0'},{id:'almoco',l:'Almoço',bg:'#D6EAF8'},{id:'lanche',l:'Lanche',bg:'#D5F5E3'}]
-};
-const SL={yes:'Sei fazer',help:'Com ajuda',no:'Só como',list:'Colocar na lista'};
-const SC={yes:'sk-yes',help:'sk-help',no:'sk-no',list:'sk-list'};
-let curDay='sex',curPerson='Davi';
-let curSkill={cafe:'list',almoco:'yes',lanche:'yes',jantar:'yes'};
-let allItems=[];
 
-window.showSection=function(sec,btn){
-  document.getElementById('sec-sugestoes').style.display=sec==='sugestoes'?'':'none';
-  document.getElementById('sec-menu').style.display=sec==='menu'?'':'none';
-  document.querySelectorAll('.mnbtn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-};
-
-function setStatus(live,msg){
-  document.getElementById('sdot').className='dot'+(live?' live':'');
-  document.getElementById('stxt').textContent=msg;
-}
-
-async function loadAll(){
-  const {data,error}=await sb.from('sugestoes').select('*').order('id',{ascending:true});
-  if(error){setStatus(false,'Erro de conexão');return;}
-  allItems=data||[];
-  setStatus(true,'Ao vivo — atualiza em tempo real');
-  renderGrid();
-}
-
-sb.channel('sugestoes-changes')
-  .on('postgres_changes',{event:'*',schema:'public',table:'sugestoes'},()=>loadAll())
-  .subscribe();
-loadAll();
-
-window.selP=function(btn,p){curPerson=p;document.querySelectorAll('.pbtn').forEach(b=>b.classList.remove('on'));btn.classList.add('on')};
-window.selDay=function(id){curDay=id;renderTabs();renderGrid()};
-window.selSkill=function(mealId,skill){
-  curSkill[mealId]=skill;
-  document.querySelectorAll(`.sbtn[data-meal="${mealId}"]`).forEach(b=>{b.className='sbtn';if(b.dataset.skill===skill)b.classList.add('sel-'+skill)});
-};
-window.addS=async function(mealId){
-  const inp=document.getElementById('inp-'+mealId);
-  const val=inp.value.trim();if(!val)return;inp.value='';
-  await sb.from('sugestoes').insert({dia:curDay,refeicao:mealId,prato:val,autor:curPerson,habilidade:curSkill[mealId],votos:{}});
-};
-window.vote=async function(id,pessoa,delta){
-  const item=allItems.find(i=>i.id===id);if(!item)return;
-  const votos={...item.votos};const prev=votos[pessoa]||0;const next=prev+delta;
-  if(next<0||next>3)return;votos[pessoa]=next;
-  await sb.from('sugestoes').update({votos}).eq('id',id);
-};
-function tv(votos){return Object.values(votos||{}).reduce((a,b)=>a+b,0)}
-function renderTabs(){
-  document.getElementById('dtabs').innerHTML=DAYS.map(d=>`<button class="dtab ${d.id===curDay?'on':''}" onclick="selDay('${d.id}')">${d.l}</button>`).join('');
-}
-function renderGrid(){
-  renderTabs();
-  document.getElementById('grid').innerHTML=MBD[curDay].map(m=>{
-    const items=allItems.filter(i=>i.dia===curDay&&i.refeicao===m.id);
-    const pills=items.length?items.map(it=>{
-      const t=tv(it.votos);
-      return `<div class="pill"><span class="pname">${it.prato}</span><span class="pauth">${it.autor}</span><span class="stag ${SC[it.habilidade]||'sk-list'}">${SL[it.habilidade]||it.habilidade}</span><div class="vrow"><button class="vbtn" onclick="vote(${it.id},'${curPerson}',-1)">−</button><span class="vc ${t>0?'hot':''}">${t}</span><button class="vbtn" onclick="vote(${it.id},'${curPerson}',1)">+</button></div></div>`;
-    }).join(''):'<span class="hint">Nenhuma sugestão ainda</span>';
-    const sk=curSkill[m.id];
-    return `<div class="mcard"><div class="mhead"><div class="micon" style="background:${m.bg}"></div><span class="mtitle">${m.l}</span></div><div class="pills">${pills}</div><div class="arow"><input id="inp-${m.id}" type="text" placeholder="Sugerir prato..." onkeydown="if(event.key==='Enter')addS('${m.id}')"><div class="ssel"><button class="sbtn ${sk==='yes'?'sel-yes':''}" data-meal="${m.id}" data-skill="yes" onclick="selSkill('${m.id}','yes')">Sei fazer</button><button class="sbtn ${sk==='help'?'sel-help':''}" data-meal="${m.id}" data-skill="help" onclick="selSkill('${m.id}','help')">Com ajuda</button><button class="sbtn ${sk==='no'?'sel-no':''}" data-meal="${m.id}" data-skill="no" onclick="selSkill('${m.id}','no')">Só como</button><button class="sbtn ${sk==='list'?'sel-list':''}" data-meal="${m.id}" data-skill="list" onclick="selSkill('${m.id}','list')">Colocar na lista</button></div><button class="abtn" onclick="addS('${m.id}')">Adicionar</button></div></div>`;
-  }).join('');
-}
-window.doSummary=function(){
-  let lines=['Resumo — Menu Jornada BR Cartagena 26\nDavi · Gustavo · Lucas · Ricardo\n'];
-  DAYS.forEach(d=>{
-    lines.push(d.l+':');
-    MBD[d.id].forEach(m=>{
-      const items=allItems.filter(i=>i.dia===d.id&&i.refeicao===m.id);
-      if(!items.length){lines.push('  '+m.l+': sem sugestões');return;}
-      const sorted=items.slice().sort((a,b)=>tv(b.votos)-tv(a.votos));
-      lines.push('  '+m.l+':');
-      sorted.forEach(it=>lines.push(`    • ${it.prato} — ${it.autor} (${SL[it.habilidade]||it.habilidade}) · ${tv(it.votos)} votos`));
-    });lines.push('');
-  });alert(lines.join('\n'));
-};
-renderTabs();
-</script>
 </body>
 </html>
